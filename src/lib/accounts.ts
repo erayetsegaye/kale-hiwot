@@ -6,7 +6,7 @@ import type { AgeBand, Guardian, Profile, Role, Teacher } from '@/lib/types';
  * and reused by both the server action and (later) any admin "invite" flow.
  */
 
-const ROLES: Role[] = ['admin', 'teacher', 'parent'];
+const ROLES: Role[] = ['super_admin', 'admin', 'teacher', 'parent'];
 
 /**
  * Works out who is signing in.
@@ -27,6 +27,7 @@ export function resolveSignIn(
   }
 
   const local = email.trim().toLowerCase();
+  if (local.startsWith('superadmin') || local.startsWith('super_admin')) return { role: 'super_admin', profileId: null };
   if (local.startsWith('admin')) return { role: 'admin', profileId: null };
   if (local.startsWith('teacher')) return { role: 'teacher', profileId: null };
   return { role: 'parent', profileId: null };

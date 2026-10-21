@@ -16,12 +16,22 @@ as $$ select role from profiles where id = auth.uid() $$;
 create or replace function is_admin()
 returns boolean
 language sql stable security definer set search_path = public
-as $$ select coalesce(current_role_name() = 'admin', false) $$;
+as $$ select coalesce(current_role_name() in ('admin', 'super_admin'), false) $$;
+
+create or replace function is_super_admin()
+returns boolean
+language sql stable security definer set search_path = public
+as $$ select coalesce(current_role_name() = 'super_admin', false) $$;
 
 create or replace function is_teacher()
 returns boolean
 language sql stable security definer set search_path = public
 as $$ select coalesce(current_role_name() = 'teacher', false) $$;
+
+create or replace function is_parent()
+returns boolean
+language sql stable security definer set search_path = public
+as $$ select coalesce(current_role_name() = 'parent', false) $$;
 
 create or replace function my_guardian_id()
 returns uuid

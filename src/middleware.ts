@@ -28,9 +28,25 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
+  // Preview-role route gating
+  if (previewRole) {
+    if (pathname.startsWith('/admin') && previewRole !== 'admin' && previewRole !== 'super_admin') {
+      const url = request.nextUrl.clone();
+      url.pathname = previewRole === 'teacher' ? '/teacher' : '/parent';
+      return NextResponse.redirect(url);
+    }
+    if (pathname.startsWith('/teacher') && previewRole === 'parent') {
+      const url = request.nextUrl.clone();
+      url.pathname = '/parent';
+      return NextResponse.redirect(url);
+    }
+  }
+
   if (signedIn && (pathname === '/login' || pathname === '/register')) {
     const url = request.nextUrl.clone();
-    url.pathname = previewRole ? `/${previewRole}` : '/parent';
+    url.pathname = previewRole
+      ? (previewRole === 'super_admin' ? '/admin' : `/${previewRole}`)
+      : '/parent';
     return NextResponse.redirect(url);
   }
 

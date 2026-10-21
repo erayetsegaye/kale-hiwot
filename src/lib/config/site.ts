@@ -20,6 +20,7 @@ export const siteConfig = {
 
 /** Sign-in hints shown while the app runs on the local database. */
 export const demoAccounts = [
+  { role: 'super_admin', email: 'superadmin@furikalehiwot.church', label: 'Super Admin' },
   { role: 'admin', email: 'admin@furikalehiwot.church', label: 'Ministry Admin' },
   { role: 'teacher', email: 'marta.alemu@furikalehiwot.church', label: 'Teacher' },
   { role: 'parent', email: 'selam.tadesse@example.com', label: 'Parent' },

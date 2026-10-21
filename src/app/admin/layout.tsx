@@ -4,7 +4,7 @@ import { requireRole } from '@/lib/auth';
 import { listNotifications, listRegistrations } from '@/lib/data/queries';
 
 export default async function AdminLayout({ children }: { children: ReactNode }) {
-  const user = await requireRole('admin');
+  const user = await requireRole('admin', 'super_admin');
   const [registrations, notifications] = await Promise.all([
     listRegistrations(),
     listNotifications({ role: 'admin' }),

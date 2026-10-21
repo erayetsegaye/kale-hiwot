@@ -41,6 +41,17 @@ export function buildSeed(): Database {
     /* ---------------------------------------------------------- profiles */
     profiles: [
       {
+        id: 'usr-superadmin',
+        fullName: 'Super Admin',
+        email: 'superadmin@furikalehiwot.church',
+        phone: '+251 911 000 000',
+        role: 'super_admin',
+        avatarUrl: null,
+        isActive: true,
+        createdAt: '2018-01-01T08:00:00.000Z',
+        lastSeenAt: hoursAgo(0.1),
+      },
+      {
         id: 'usr-admin',
         fullName: 'Ministry Admin',
         email: 'admin@furikalehiwot.church',

@@ -3,7 +3,7 @@
    Keep this file and the SQL in sync; both are the contract for the data layer.
    ========================================================================== */
 
-export type Role = 'admin' | 'teacher' | 'parent';
+export type Role = 'super_admin' | 'admin' | 'teacher' | 'parent';
 
 export type RegistrationStatus =
   | 'pending'

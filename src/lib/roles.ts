@@ -11,12 +11,14 @@ export const DEMO_ROLE_COOKIE = 'kh_preview_role';
 export const PREVIEW_USER_COOKIE = 'kh_preview_user';
 
 export const roleHome: Record<Role, string> = {
+  super_admin: '/admin',
   admin: '/admin',
   teacher: '/teacher',
   parent: '/parent',
 };
 
 export const roleLabel: Record<Role, string> = {
+  super_admin: 'Super Admin',
   admin: 'Ministry Admin',
   teacher: 'Teacher',
   parent: 'Parent / Guardian',

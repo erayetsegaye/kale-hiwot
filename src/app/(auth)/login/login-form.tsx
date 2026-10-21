@@ -98,7 +98,7 @@ export function LoginForm() {
           <p className="text-[0.6875rem] font-bold tracking-[0.12em] text-faint uppercase">
             {t('auth.login.previewTitle')}
           </p>
-          <div className="mt-3 grid grid-cols-3 gap-2">
+          <div className="mt-3 grid grid-cols-2 gap-2">
             {demoAccounts.map((account) => (
               <button
                 key={account.role}

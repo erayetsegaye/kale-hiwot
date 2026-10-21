@@ -15,6 +15,7 @@ export type SessionUser = Pick<
 
 /** Default identity per role when signing in without a specific account. */
 const defaultProfileId: Partial<Record<Role, string>> = {
+  super_admin: 'usr-admin',
   admin: 'usr-admin',
   parent: 'usr-selam',
   teacher: 'usr-marta',
@@ -50,25 +51,29 @@ export async function getCurrentUser(): Promise<SessionUser | null> {
   const supabase = await getSupabaseServerClient();
 
   if (supabase) {
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
+    try {
+      const {
+        data: { user } = {},
+      } = await supabase.auth.getUser();
 
-    if (user) {
-      const { data: profile } = await supabase
-        .from('profiles')
-        .select('id, full_name, email, role, avatar_url')
-        .eq('id', user.id)
-        .single();
+      if (user) {
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('id, full_name, email, role, avatar_url')
+          .eq('id', user.id)
+          .single();
 
-      return {
-        id: user.id,
-        fullName: profile?.full_name ?? user.email ?? 'Member',
-        email: profile?.email ?? user.email ?? '',
-        role: (profile?.role as Role) ?? 'parent',
-        avatarUrl: profile?.avatar_url ?? null,
-        isDemo: false,
-      };
+        return {
+          id: user.id,
+          fullName: profile?.full_name ?? user.email ?? 'Member',
+          email: profile?.email ?? user.email ?? '',
+          role: (profile?.role as Role) ?? 'parent',
+          avatarUrl: profile?.avatar_url ?? null,
+          isDemo: false,
+        };
+      }
+    } catch (err) {
+      console.error('Failed to get current user from Supabase:', err);
     }
   }
 

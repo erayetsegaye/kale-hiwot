@@ -1,5 +1,6 @@
 import { mkdirSync, readFileSync, renameSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
+import { tmpdir } from 'node:os';
 import type { Database } from './types';
 import { buildSeed } from './seed';
 
@@ -13,7 +14,10 @@ import { buildSeed } from './seed';
  * `lib/data/queries.ts`, not touching any page.
  */
 
-const FILE = join(process.cwd(), '.data', 'ministry-db.json');
+const isServerless = Boolean(process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME);
+const FILE = isServerless
+  ? join(tmpdir(), 'kale-hiwot-db.json')
+  : join(process.cwd(), '.data', 'ministry-db.json');
 
 let cache: Database | null = null;
 let cacheStamp = 0;
@@ -37,13 +41,19 @@ function load(): Database {
 }
 
 function persist(db: Database) {
-  mkdirSync(dirname(FILE), { recursive: true });
-  // Write to a temp file then rename: a crash can never leave a half file.
-  const temp = `${FILE}.tmp`;
-  writeFileSync(temp, JSON.stringify(db, null, 2), 'utf8');
-  renameSync(temp, FILE);
   cache = db;
   cacheStamp = Date.now();
+
+  try {
+    mkdirSync(dirname(FILE), { recursive: true });
+    // Write to a temp file then rename: a crash can never leave a half file.
+    const temp = `${FILE}.tmp`;
+    writeFileSync(temp, JSON.stringify(db, null, 2), 'utf8');
+    renameSync(temp, FILE);
+  } catch (error) {
+    // In restricted or read-only environments, retain in memory
+    console.warn('Failed to persist database to disk, keeping in memory cache:', error);
+  }
 }
 
 /** Read the whole database (cached briefly). */

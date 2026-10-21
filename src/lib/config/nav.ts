@@ -36,61 +36,64 @@ export interface NavGroup {
   items: NavItem[];
 }
 
+const adminNavigation: NavGroup[] = [
+  {
+    label: 'nav.groups.overview',
+    items: [
+      { label: 'nav.items.dashboard', href: '/admin', icon: LayoutDashboard },
+      { label: 'nav.items.calendar', href: '/admin/calendar', icon: CalendarDays },
+    ],
+  },
+  {
+    label: 'nav.groups.people',
+    items: [
+      { label: 'nav.items.users', href: '/admin/users', icon: Users },
+      { label: 'nav.items.children', href: '/admin/children', icon: Heart },
+      { label: 'nav.items.parents', href: '/admin/parents', icon: UsersRound },
+      { label: 'nav.items.teachers', href: '/admin/teachers', icon: GraduationCap },
+      {
+        label: 'nav.items.registrations',
+        href: '/admin/registrations',
+        icon: UserPlus,
+        badgeKey: 'pendingRegistrations',
+      },
+    ],
+  },
+  {
+    label: 'nav.groups.ministry',
+    items: [
+      { label: 'nav.items.classes', href: '/admin/classes', icon: BookOpen },
+      { label: 'nav.items.activities', href: '/admin/activities', icon: CalendarRange },
+      { label: 'nav.items.events', href: '/admin/events', icon: Sparkles },
+      { label: 'nav.items.lessons', href: '/admin/lessons', icon: FileText },
+      { label: 'nav.items.attendance', href: '/admin/attendance', icon: ClipboardCheck },
+    ],
+  },
+  {
+    label: 'nav.groups.communication',
+    items: [
+      { label: 'nav.items.announcements', href: '/admin/announcements', icon: Megaphone },
+      {
+        label: 'nav.items.notifications',
+        href: '/admin/notifications',
+        icon: Bell,
+        badgeKey: 'unreadNotifications',
+      },
+    ],
+  },
+  {
+    label: 'nav.groups.system',
+    items: [
+      { label: 'nav.items.reports', href: '/admin/reports', icon: BarChart3 },
+      { label: 'nav.items.settings', href: '/admin/settings', icon: Settings },
+      { label: 'nav.items.auditLogs', href: '/admin/audit-logs', icon: ShieldCheck },
+    ],
+  },
+];
+
 export const navigation: Record<Role, NavGroup[]> = {
-  admin: [
-    {
-      label: 'nav.groups.overview',
-      items: [
-        { label: 'nav.items.dashboard', href: '/admin', icon: LayoutDashboard },
-        { label: 'nav.items.calendar', href: '/admin/calendar', icon: CalendarDays },
-      ],
-    },
-    {
-      label: 'nav.groups.people',
-      items: [
-        { label: 'nav.items.users', href: '/admin/users', icon: Users },
-        { label: 'nav.items.children', href: '/admin/children', icon: Heart },
-        { label: 'nav.items.parents', href: '/admin/parents', icon: UsersRound },
-        { label: 'nav.items.teachers', href: '/admin/teachers', icon: GraduationCap },
-        {
-          label: 'nav.items.registrations',
-          href: '/admin/registrations',
-          icon: UserPlus,
-          badgeKey: 'pendingRegistrations',
-        },
-      ],
-    },
-    {
-      label: 'nav.groups.ministry',
-      items: [
-        { label: 'nav.items.classes', href: '/admin/classes', icon: BookOpen },
-        { label: 'nav.items.activities', href: '/admin/activities', icon: CalendarRange },
-        { label: 'nav.items.events', href: '/admin/events', icon: Sparkles },
-        { label: 'nav.items.lessons', href: '/admin/lessons', icon: FileText },
-        { label: 'nav.items.attendance', href: '/admin/attendance', icon: ClipboardCheck },
-      ],
-    },
-    {
-      label: 'nav.groups.communication',
-      items: [
-        { label: 'nav.items.announcements', href: '/admin/announcements', icon: Megaphone },
-        {
-          label: 'nav.items.notifications',
-          href: '/admin/notifications',
-          icon: Bell,
-          badgeKey: 'unreadNotifications',
-        },
-      ],
-    },
-    {
-      label: 'nav.groups.system',
-      items: [
-        { label: 'nav.items.reports', href: '/admin/reports', icon: BarChart3 },
-        { label: 'nav.items.settings', href: '/admin/settings', icon: Settings },
-        { label: 'nav.items.auditLogs', href: '/admin/audit-logs', icon: ShieldCheck },
-      ],
-    },
-  ],
+  super_admin: adminNavigation,
+  admin: adminNavigation,
   teacher: [
     {
       label: 'nav.groups.teaching',
@@ -163,15 +166,18 @@ export const navigation: Record<Role, NavGroup[]> = {
   ],
 };
 
+const adminMobileNav: NavItem[] = [
+  { label: 'nav.items.home', href: '/admin', icon: LayoutDashboard },
+  { label: 'nav.items.children', href: '/admin/children', icon: Heart },
+  { label: 'nav.items.schedule', href: '/admin/activities', icon: CalendarRange },
+  { label: 'nav.items.approvals', href: '/admin/registrations', icon: UserPlus },
+  { label: 'nav.items.more', href: '/admin/settings', icon: Settings },
+];
+
 /** Condensed bottom bar for phones — the 5 most used destinations per role. */
 export const mobileNav: Record<Role, NavItem[]> = {
-  admin: [
-    { label: 'nav.items.home', href: '/admin', icon: LayoutDashboard },
-    { label: 'nav.items.children', href: '/admin/children', icon: Heart },
-    { label: 'nav.items.schedule', href: '/admin/activities', icon: CalendarRange },
-    { label: 'nav.items.approvals', href: '/admin/registrations', icon: UserPlus },
-    { label: 'nav.items.more', href: '/admin/settings', icon: Settings },
-  ],
+  super_admin: adminMobileNav,
+  admin: adminMobileNav,
   teacher: [
     { label: 'nav.items.home', href: '/teacher', icon: LayoutDashboard },
     { label: 'nav.items.classes', href: '/teacher/classes', icon: BookOpen },

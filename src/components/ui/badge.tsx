@@ -99,6 +99,7 @@ export function AttendanceBadge({ status }: { status: AttendanceStatus }) {
 }
 
 const roleTone: Record<Role, BadgeTone> = {
+  super_admin: 'berry',
   admin: 'plum',
   teacher: 'sky',
   parent: 'brand',

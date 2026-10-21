@@ -17,11 +17,12 @@ import type { AgeBand, Role } from '@/lib/types';
 
 export type AuthState = { error?: string; message?: string };
 
-const ROLES: Role[] = ['admin', 'teacher', 'parent'];
+const ROLES: Role[] = ['super_admin', 'admin', 'teacher', 'parent'];
 
 function inferPreviewRole(email: string, requested?: string | null): Role {
   if (requested && ROLES.includes(requested as Role)) return requested as Role;
   const local = email.toLowerCase();
+  if (local.startsWith('superadmin') || local.startsWith('super_admin')) return 'super_admin';
   if (local.startsWith('admin')) return 'admin';
   if (local.startsWith('teacher')) return 'teacher';
   return 'parent';

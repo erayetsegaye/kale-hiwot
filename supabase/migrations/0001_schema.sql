@@ -9,7 +9,7 @@
 create extension if not exists "pgcrypto";
 
 -- ----------------------------------------------------------------- enum types
-create type user_role            as enum ('admin', 'teacher', 'parent');
+create type user_role            as enum ('super_admin', 'admin', 'teacher', 'parent');
 create type registration_status  as enum ('pending', 'needs_info', 'approved', 'rejected');
 create type attendance_status    as enum ('present', 'absent', 'late', 'excused');
 create type activity_type        as enum ('class','bible_study','worship','choir','teacher_meeting','parent_meeting','camp','field_trip','competition','program','custom');

@@ -16,6 +16,7 @@ export default async function AdminUsersPage() {
   const f = await getFormat();
   const profiles = await listProfiles();
   const counts = {
+    super_admin: profiles.filter((p) => p.role === 'super_admin').length,
     admin: profiles.filter((p) => p.role === 'admin').length,
     teacher: profiles.filter((p) => p.role === 'teacher').length,
     parent: profiles.filter((p) => p.role === 'parent').length,
@@ -29,8 +30,8 @@ export default async function AdminUsersPage() {
         description={t('pages.admin.users.description')}
       />
 
-      <div className="grid gap-4 sm:grid-cols-3">
-        {(['admin', 'teacher', 'parent'] as const).map((role) => (
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {(['super_admin', 'admin', 'teacher', 'parent'] as const).map((role) => (
           <Card key={role} className="p-5">
             <div className="flex items-center justify-between">
               <RoleBadge role={role} />
@@ -40,11 +41,13 @@ export default async function AdminUsersPage() {
               {counts[role]}
             </p>
             <p className="text-[0.75rem] text-muted">
-              {role === 'admin'
-                ? 'Full management access'
-                : role === 'teacher'
-                  ? 'Assigned classes only'
-                  : 'Own children only'}
+              {role === 'super_admin'
+                ? 'Full system & access control'
+                : role === 'admin'
+                  ? 'Full management access'
+                  : role === 'teacher'
+                    ? 'Assigned classes only'
+                    : 'Own children only'}
             </p>
           </Card>
         ))}

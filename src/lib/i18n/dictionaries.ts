@@ -167,6 +167,7 @@ export const en = {
   },
 
   roles: {
+    super_admin: 'Super Admin',
     admin: 'Ministry Admin',
     teacher: 'Teacher',
     parent: 'Parent / Guardian',
@@ -913,6 +914,7 @@ export const am: Translation<Dictionary> = {
   },
 
   roles: {
+    super_admin: 'ዋና አስተዳዳሪ',
     admin: 'የአገልግሎት አስተዳዳሪ',
     teacher: 'መምህር',
     parent: 'ወላጅ / አሳዳጊ',

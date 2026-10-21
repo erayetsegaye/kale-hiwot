@@ -9,7 +9,7 @@ import { useT } from '@/lib/i18n/client';
 import { roleText } from '@/lib/i18n/domain';
 import type { Role } from '@/lib/types';
 
-const roles: Role[] = ['parent', 'teacher', 'admin'];
+const roles: Role[] = ['parent', 'teacher', 'admin', 'super_admin'];
 
 /**
  * Admin role switcher: User → Role, with an explicit confirmation step.
